@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "http": {
+    "MyFirstApp": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
