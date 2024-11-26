@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>@ViewData["Title"]</title> 
+    <title>@ViewData["Title"]</title>
     @* @ViewData["Title"] comes from Index.cshtml, Title is the key assigned at Index.cshtml ViewData["Title"] = "Home";
     We can repeat the same process for every view, otherwise the title would be the name of the url (localhost:7109/about-company)
     *@
@@ -25,8 +25,11 @@
         <div class="page-content">
             @RenderBody()
         </div>
+        <div class="footer-content">
+            @RenderSection("footer_section", false)
+        </div>
     </div>
-    <div>
-    </div>
+    @* <script src = "file.js"></script> *@
+    @* <script src="specificViewFile.js"></script> *@
 </body>
 </html>
