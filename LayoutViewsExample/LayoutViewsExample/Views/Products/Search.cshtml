@@ -1,5 +1,8 @@
 ﻿@{
-    Layout = "~/Views/Shared/_ProductsLayout.cshtml";
+    if (ViewBag.ProductID != null)
+    {
+        Layout = "~/Views/Shared/_ProductsLayout.cshtml";        
+    }//if ProductID is null, the default _Layout will be applied
     ViewData["Title"] = "Search";
 }
 
