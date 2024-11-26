@@ -7,6 +7,14 @@ namespace PartialViewsExample.Controllers
         [Route("/")]
         public IActionResult Index()
         {
+            ViewData["ListTitle"] = "Cities";
+            ViewData["ListItems"] = new List<String>()
+            {
+                "Cosala",
+                "Mazatlan",
+                "Culiacan",
+                "Guasave"
+            };
             return View();
         }
 

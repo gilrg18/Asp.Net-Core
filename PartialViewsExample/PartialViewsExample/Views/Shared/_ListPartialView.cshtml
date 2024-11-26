@@ -1,10 +1,14 @@
-﻿<div class="list-container">
-    <h3>Cities</h3>
+﻿@* ViewBag and ViewData is the same thing *@
+<div class="list-container">
+    @{
+        // ViewBag.ListTitle = "Updated";
+    }
+    @* <h3>@ViewBag.ListTitle</h3> *@
+    <h3>@ViewData["ListTitle"]</h3>
     <ul class="list">
-        <li>Maza</li>
-        <li>Culiacan</li>
-        <li>Guasave</li>
-        <li>Navolato</li>
-        <li>Cosala</li>
+        @foreach(string item in ViewBag.ListItems)
+        {
+            <li>@item</li>
+        }
     </ul>
 </div>
