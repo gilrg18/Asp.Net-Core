@@ -16,7 +16,7 @@ namespace LayoutViewsExample.Controllers
             return View();
         }
 
-        [Route("order-product")]
+        [Route("order-products")]
         public IActionResult Order()
         {
             return View();
