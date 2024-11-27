@@ -1,12 +1,13 @@
-﻿@* ViewBag and ViewData is the same thing *@
+﻿@model ListModel
+@* Add @model [name of the class that you want to bind to this partial view]
+    in this case @model ListModel
+    now our partial view is Strongly typed View that is binded to the ListModel Class
+    so it can receive the model object at runtime
+*@
 <div class="list-container">
-    @{
-        // ViewBag.ListTitle = "Updated";
-    }
-    @* <h3>@ViewBag.ListTitle</h3> *@
-    <h3>@ViewData["ListTitle"]</h3>
+    <h3>@Model.ListTitle</h3>
     <ul class="list">
-        @foreach(string item in ViewBag.ListItems)
+        @foreach(string item in Model.ListItems)
         {
             <li>@item</li>
         }

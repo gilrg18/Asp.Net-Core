@@ -1,22 +1,17 @@
-﻿<h1>Home</h1>
-
-<partial name="_ListPartialView"></partial>
-
+﻿
+<h1>Home</h1>
 @{
-    var myViewData = new ViewDataDictionary(ViewData);
-    myViewData["ListTitle"] = "Countries";
-    myViewData["ListItems"] = new List<String>()
-            {
-                "Mexico",
-                "USA",
-                "Canada",
-                "Guatemala"
-            };
+    //Initialize the ListModel with some data
+    ListModel listModel = new ListModel();
+    listModel.ListTitle = "Countries";
+    listModel.ListItems = new List<string>()
+    {
+        "USA",
+        "CANADA",
+        "JAPAN",
+        "MEXICO"
+    };
 }
-<div class="box">
-    <partial name="_ListPartialView" view-data="myViewData"></partial>
+@*Pass the listModel to the PartialView so its strongly typed now.*@
+<partial name="_ListPartialView" model="listModel"></partial>
 
-</div>
-
-<h3>@ViewData["ListTitle"]</h3>
-@* Partial tag must be imported explicitly in a _ViewImports.cshtml File*@

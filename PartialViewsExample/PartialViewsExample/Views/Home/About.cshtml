@@ -16,7 +16,19 @@
 @* @await Html.PartialAsync("_ListPartialView") *@
 @* Returns the content to the parent view *@
 @{
-    await Html.RenderPartialAsync("_ListPartialView");
+    //Initialize the ListModel with some data
+    ListModel listModel = new ListModel();
+    listModel.ListTitle = "Programming Languages";
+    listModel.ListItems = new List<string>()
+    {
+        "C#",
+        "JavaScript",
+        "Java",
+        "Go"
+    };
+}
+@{
+     await Html.RenderPartialAsync("_ListPartialView", listModel);
     @* this partial return async returns void so you have to use it inside a code block *@
     // Streams the content to the browser
 }
