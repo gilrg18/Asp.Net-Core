@@ -1,17 +1,17 @@
 ﻿
 <h1>Home</h1>
-@{
-    //Initialize the ListModel with some data
-    ListModel listModel = new ListModel();
-    listModel.ListTitle = "Countries";
-    listModel.ListItems = new List<string>()
-    {
-        "USA",
-        "CANADA",
-        "JAPAN",
-        "MEXICO"
-    };
-}
-@*Pass the listModel to the PartialView so its strongly typed now.*@
-<partial name="_ListPartialView" model="listModel"></partial>
+
+<button class="button button-blue-back" type="button" id="button-load">Load Programming Languages</button>
+<div class="box" id="programming-languages-content">
+</div>
+
+
+<script>
+    document.querySelector("#button-load").addEventListener("click", async function () {
+        var response = await fetch("programming-languages")
+        //save partial view html, response is plain html or text
+        var languages = await response.text();
+        document.querySelector("#programming-languages-content").innerHTML = languages
+    });
+</script>
 
