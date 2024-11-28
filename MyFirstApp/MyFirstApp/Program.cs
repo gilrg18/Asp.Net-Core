@@ -16,10 +16,10 @@ app.Run(async (HttpContext context) =>
     context.Response.Headers["Content-Type"] = "text/html";
 
 
-    if (context.Request.Headers.ContainsKey("User-Agent"))
+    if (context.Request.Headers.ContainsKey("AuthorizationCustomKey"))
     {
-        string userAgent = context.Request.Headers["User-Agent"];
-        await context.Response.WriteAsync($"<p>{userAgent}</p>");
+        string key = context.Request.Headers["AuthorizationCustomKey"];
+        await context.Response.WriteAsync($"<p>{key}</p>");
     }
 
 
