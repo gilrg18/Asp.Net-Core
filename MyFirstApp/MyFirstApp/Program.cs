@@ -3,7 +3,6 @@ using Microsoft.Extensions.Primitives;
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
 
-//app.MapGet("/", () => "Hello World!");
 app.Run(async (HttpContext context) =>
 {
     string firstNumberQuery = context.Request.Query["firstNumber"];
