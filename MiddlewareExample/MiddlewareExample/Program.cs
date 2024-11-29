@@ -3,19 +3,22 @@ var builder = WebApplication.CreateBuilder(args);
 //Application builder object is used to enable or create middleware
 var app = builder.Build();
 
-//The extension mehtod called 'RUN' is used to execute a terminating/short-
-//circuiting middleware that doesnt forward the request to the next middleware
-app.Run(async (HttpContext context) =>
+//Middleware 1
+app.Use(async (HttpContext context, RequestDelegate next) =>
 {
     await context.Response.WriteAsync("Hello");
+    await next(context); //to call the subsequent middleware 
 });
 
-//The second middleware doesnt execute after completion of the first(above) middleware
-//App.Run method doesnt forward the request to the subsequent middleware
-//As a result we wont see 'Hello Again'
+//Middleware 2
+app.Use(async (HttpContext context, RequestDelegate next) =>
+{
+    await context.Response.WriteAsync("Middleware 2");
+    await next(context);
+});
+
 app.Run(async (HttpContext context) =>
 {
-    await context.Response.WriteAsync("Hello Again");
+    await context.Response.WriteAsync("Middleware 3");
 });
-//A middleware SHOULD be able to forward the request to the subsequent middleware, this is called middleware chain.
 app.Run();
