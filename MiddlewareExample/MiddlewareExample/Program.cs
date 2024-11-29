@@ -23,7 +23,9 @@ app.Use(async (HttpContext context, RequestDelegate next) =>
 //method to use it there (UseMyCustomMiddleware()) and call it here.
 //UseMyCustomMiddleware is an extension method because we are able to dynamically inject/add a new method
 //into an existing object or type
-app.UseMyCustomMiddleware();
+//app.UseMyCustomMiddleware();
+
+app.UseHelloCustomMiddleware();
 
 //Middleware 3 (App.Run is a terminating/short-circuit middleware)
 app.Run(async (HttpContext context) =>
