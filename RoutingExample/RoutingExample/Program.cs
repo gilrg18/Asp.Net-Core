@@ -27,9 +27,18 @@ app.UseEndpoints(endpoints => //Executes endpoint
     });
 
     //Eg: products/details/1
-    endpoints.Map("products/details/{id=1}", async (context) => {
-        int id = Convert.ToInt32(context.Request.RouteValues["id"]);
-        await context.Response.WriteAsync($"Given id: {id}");
+    //default values for optional parameters (id?) is null
+    endpoints.Map("products/details/{id?}", async (context) =>
+    {
+        if (context.Request.RouteValues.ContainsKey("id"))
+        {
+            int id = Convert.ToInt32(context.Request.RouteValues["id"]);
+            await context.Response.WriteAsync($"Given id: {id}");
+        }
+        else
+        {
+            await context.Response.WriteAsync($"Id is not supplied");
+        }
     });
 });
 #pragma warning restore ASP0014 // Suggest using top level route registrations
