@@ -20,12 +20,17 @@ app.UseEndpoints(endpoints => //Executes endpoint
     });
 
     //route names are case insensitive - doesnt matter if its upper or lower case
-    endpoints.Map("employee/profile/{employeename}", async (context) =>
+    endpoints.Map("employee/profile/{employeename=Mike}", async (context) =>
     {
         string? employeeName = Convert.ToString(context.Request.RouteValues["employeename"]);
         await context.Response.WriteAsync($"Employee profile: {employeeName}");
     });
 
+    //Eg: products/details/1
+    endpoints.Map("products/details/{id=1}", async (context) => {
+        int id = Convert.ToInt32(context.Request.RouteValues["id"]);
+        await context.Response.WriteAsync($"Given id: {id}");
+    });
 });
 #pragma warning restore ASP0014 // Suggest using top level route registrations
 
