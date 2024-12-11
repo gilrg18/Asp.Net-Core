@@ -28,7 +28,7 @@ app.UseEndpoints(endpoints => //Executes endpoint
 
     //Eg: products/details/1
     //default values for optional parameters (id?) is null
-    endpoints.Map("products/details/{id?}", async (context) =>
+    endpoints.Map("products/details/{id:int?}", async (context) =>
     {
         if (context.Request.RouteValues.ContainsKey("id"))
         {
@@ -39,6 +39,13 @@ app.UseEndpoints(endpoints => //Executes endpoint
         {
             await context.Response.WriteAsync($"Id is not supplied");
         }
+    });
+
+    //Eg: daily-digest-report/{reportdate}
+    endpoints.Map("daily-digest-report/{reportdate:datetime}", async context =>
+    {
+        DateTime reportDate = Convert.ToDateTime(context.Request.RouteValues["reportdate"]);
+        await context.Response.WriteAsync($"Daily-Digest-Report - {reportDate.ToShortDateString()}");
     });
 });
 #pragma warning restore ASP0014 // Suggest using top level route registrations
