@@ -20,7 +20,7 @@ app.UseEndpoints(endpoints => //Executes endpoint
     });
 
     //route names are case insensitive - doesnt matter if its upper or lower case
-    endpoints.Map("employee/profile/{employeename=Mike}", async (context) =>
+    endpoints.Map("employee/profile/{employeename:length(3,7):alpha=Mike}", async (context) =>
     {
         string? employeeName = Convert.ToString(context.Request.RouteValues["employeename"]);
         await context.Response.WriteAsync($"Employee profile: {employeeName}");
@@ -28,7 +28,7 @@ app.UseEndpoints(endpoints => //Executes endpoint
 
     //Eg: products/details/1
     //default values for optional parameters (id?) is null
-    endpoints.Map("products/details/{id:int?}", async (context) =>
+    endpoints.Map("products/details/{id:int:range(1,1000)?}", async (context) =>
     {
         if (context.Request.RouteValues.ContainsKey("id"))
         {
@@ -54,12 +54,19 @@ app.UseEndpoints(endpoints => //Executes endpoint
         Guid cityId = Guid.Parse(Convert.ToString(context.Request.RouteValues["cityid"])!); // '!' means the value cannot be null
         await context.Response.WriteAsync($"City info - {cityId}");
     });
+
+    //Eg: sales-report/2030/apr
+    endpoints.Map("sales-report/{year:int:min(1900)}/{month:regex(^(apr|jul|oct|jun)$)}", async context => {
+        int year = Convert.ToInt32(context.Request.RouteValues["year"]);
+        string? month = Convert.ToString(context.Request.RouteValues["month"]);// '?' means we are accepting null values
+        await context.Response.WriteAsync($"Sales Report for {month}/{year}");
+    });
 });
 #pragma warning restore ASP0014 // Suggest using top level route registrations
 
 //if request is other than map1 or map2 or the default one /
 app.Run(async context =>
 {
-    await context.Response.WriteAsync($"Request received at {context.Request.Path}");
+    await context.Response.WriteAsync($"No route matched at {context.Request.Path}");
 });
 app.Run();
