@@ -47,6 +47,13 @@ app.UseEndpoints(endpoints => //Executes endpoint
         DateTime reportDate = Convert.ToDateTime(context.Request.RouteValues["reportdate"]);
         await context.Response.WriteAsync($"Daily-Digest-Report - {reportDate.ToShortDateString()}");
     });
+
+    //Eg: cities/cityid
+    endpoints.Map("cities/{cityid:guid}", async context =>
+    {
+        Guid cityId = Guid.Parse(Convert.ToString(context.Request.RouteValues["cityid"])!); // '!' means the value cannot be null
+        await context.Response.WriteAsync($"City info - {cityId}");
+    });
 });
 #pragma warning restore ASP0014 // Suggest using top level route registrations
 
