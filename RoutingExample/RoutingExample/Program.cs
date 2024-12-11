@@ -69,6 +69,13 @@ app.UseEndpoints(endpoints => //Executes endpoint
         string? month = Convert.ToString(context.Request.RouteValues["month"]);// '?' means we are accepting null values
         await context.Response.WriteAsync($"Sales Report for {month}/{year}");
     });
+
+    //sales-report/2024/jan  <-- this has more precedence than above endpoint because of the Endpoint Selection Order
+    endpoints.Map("sales-report/2024/jan", async context =>
+    {
+     
+        await context.Response.WriteAsync($"Sales Report for 2024 January");
+    });
 });
 #pragma warning restore ASP0014 // Suggest using top level route registrations
 
