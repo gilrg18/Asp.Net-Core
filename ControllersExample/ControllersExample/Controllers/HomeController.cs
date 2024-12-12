@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-
+using ControllersExample.Models;
 namespace ControllersExample.Controllers
 {
     public class HomeController : Controller
@@ -17,10 +17,21 @@ namespace ControllersExample.Controllers
             return Content("<h1>Welcome</h1> <h2>Hello from Index</h2>", "text/html");
         }
 
-        [Route("about")]
-        public string About() //Action Method
+        [Route("person")]
+        public JsonResult Person() 
         {
-            return "Hello from About";
+            //Create Object ot the person class
+            Person person = new Person()
+            {
+                Id = Guid.NewGuid(),
+                FirstName = "Gil",
+                LastName = "Rangel",
+                Age = 25,
+            };
+            //return "{\"key\", \"value\"}"; //instead of writing this confusing code
+            //Convert person to json format
+            //return new JsonResult(person);
+            return Json(person);
         }
 
         [Route("contact-us/{mobile:regex(^\\d{{10}}$)}")] //url and action method can be named differently
