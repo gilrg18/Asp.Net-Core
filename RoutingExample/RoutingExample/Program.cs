@@ -73,9 +73,50 @@ app.UseEndpoints(endpoints => //Executes endpoint
     //sales-report/2024/jan  <-- this has more precedence than above endpoint because of the Endpoint Selection Order
     endpoints.Map("sales-report/2024/jan", async context =>
     {
-     
+
         await context.Response.WriteAsync($"Sales Report for 2024 January");
     });
+
+    Dictionary<int,string> countries = new Dictionary<int, string>
+    {
+        { 1, "United States" },
+        { 2, "Canada" },
+        { 3, "United Kingdom" },
+        { 4, "India" },
+        { 5, "Japan" }
+    };
+
+    endpoints.MapGet("/countries", async context =>
+    {
+        context.Response.StatusCode = 200;
+        foreach (KeyValuePair<int,string> country in countries)
+        {
+            await context.Response.WriteAsync($"{country.Key}, {country.Value}\n");
+        }
+    });
+
+    endpoints.MapGet("/countries/{countryID:int}", async context =>
+    {
+        int countryId = int.Parse((string)context.Request.RouteValues["countryID"]!);
+
+        if (countryId < 1 || countryId > 100)
+        {
+            context.Response.StatusCode = 400;
+            await context.Response.WriteAsync("The Country ID must be between 1 and 100");
+            return;
+        }
+
+        if (!countries.ContainsKey(countryId))
+        {
+            context.Response.StatusCode = 404;
+            await context.Response.WriteAsync("Country Not Found...");
+            return;
+        }
+
+        context.Response.StatusCode = 200;
+        await context.Response.WriteAsync(countries[countryId]);
+    });
+
 });
 #pragma warning restore ASP0014 // Suggest using top level route registrations
 
