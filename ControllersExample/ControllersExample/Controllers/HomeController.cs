@@ -2,13 +2,19 @@
 
 namespace ControllersExample.Controllers
 {
-    public class HomeController
+    public class HomeController : Controller
     {
         [Route("home")] //Attribute Routing "Route" is an attribute, route template as an argument
         [Route("/")]
-        public string Index() //Action Method
+        public ContentResult Index() //Action Method
         {
-            return "Hello from Index";
+            //return new ContentResult() { 
+            //    Content = "Hello from Index" ,
+            //    ContentType = "text/plain"
+            //};
+            //Shortcut version of above (using Microsoft.AspNetCore.Mvc.Controller)
+            //return Content("Hello from Index Siu", "text/plain");
+            return Content("<h1>Welcome</h1> <h2>Hello from Index</h2>", "text/html");
         }
 
         [Route("about")]
