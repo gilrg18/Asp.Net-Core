@@ -18,6 +18,7 @@ var app = builder.Build();
 //});
 
 //Even simpler: This calls userouting and useendpoints:
+app.UseStaticFiles();
 app.MapControllers();
 
 

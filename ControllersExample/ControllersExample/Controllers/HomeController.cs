@@ -34,11 +34,23 @@ namespace ControllersExample.Controllers
             return Json(person);
         }
 
-        [Route("contact-us/{mobile:regex(^\\d{{10}}$)}")] //url and action method can be named differently
-        public string Contact([FromRoute] string mobile) // Binds the "mobile" route value directly to the parameter
-                                                         //Action Method
+        [Route("file-download")] 
+        public VirtualFileResult FileDownload() {
+            return new VirtualFileResult("/File.pdf", "application/pdf");
+        }
+
+        [Route("file-download2")]
+        public PhysicalFileResult FileDownload2()
         {
-            return $"Hello from Contact {mobile}";
+            return new PhysicalFileResult(@"C:\Users\groge\Downloads\File2.pdf", "application/pdf");
+        }
+
+
+        [Route("file-download3")]
+        public FileContentResult FileDownload3()
+        {
+            byte[] bytes = System.IO.File.ReadAllBytes(@"C:\Users\groge\Downloads\File2.pdf");
+            return new FileContentResult(bytes, "application/pdf");
         }
     }
 }
