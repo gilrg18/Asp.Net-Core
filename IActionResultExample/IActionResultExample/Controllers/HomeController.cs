@@ -40,8 +40,26 @@ namespace IActionResultExample.Controllers
             //return new RedirectToActionResult("Books","Store",new { });
             //(actionName, controllerName, routeValues)
             //new{ } is a dummy value since we dont have any specific route parameters to pass
-            return new RedirectToActionResult("Books", "Store", new { }, true); 
+
             //true - 301 instead of 302, 301 means Moved Permanently
+
+            //Shortcut version of RedirectToActionResult is RedirectToAction (shorthand method) 
+            //- they both work the same way
+            //return new RedirectToActionResult("Books", "Store", new { }, true); 
+            //return RedirectToAction("Books", "Store", new { id = bookId });
+            //return RedirectToActionPermanent("Books", "Store", new { id = bookId });
+
+            //You cannot redirect to another website
+            //In real world projects, redirect to action is better because
+            //you can easily change the action method name and controller name
+            //return new LocalRedirectResult("store/books/{bookId}");
+            //return LocalRedirect($"store/books/{bookId}"); //302
+            //return new LocalRedirectResult($"store/books/{bookId}", true); //301
+            //return LocalRedirectPermanent($"store/books/{bookId}"); //301
+
+            //REDIRECTRESULT
+            //return Redirect($"store/books/{bookId}");//302
+            return RedirectPermanent($"store/books/{bookId}"); //301
         }
     }
 }
