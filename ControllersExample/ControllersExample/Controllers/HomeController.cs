@@ -36,21 +36,24 @@ namespace ControllersExample.Controllers
 
         [Route("file-download")] 
         public VirtualFileResult FileDownload() {
-            return new VirtualFileResult("/File.pdf", "application/pdf");
+            //return new VirtualFileResult("/File.pdf", "application/pdf");
+            return File("/File.pdf", "application/pdf");
         }
 
         [Route("file-download2")]
         public PhysicalFileResult FileDownload2()
         {
-            return new PhysicalFileResult(@"C:\Users\groge\Downloads\File2.pdf", "application/pdf");
+            //return new PhysicalFileResult(@"C:\Users\groge\Downloads\File2.pdf", "application/pdf");
+            return PhysicalFile(@"C:\Users\groge\Downloads\File2.pdf", "application/pdf");
         }
 
 
         [Route("file-download3")]
-        public FileContentResult FileDownload3()
+        public IActionResult FileDownload3()
         {
             byte[] bytes = System.IO.File.ReadAllBytes(@"C:\Users\groge\Downloads\File2.pdf");
-            return new FileContentResult(bytes, "application/pdf");
+            //return new FileContentResult(bytes, "application/pdf");
+            return File(bytes, "application/pdf");
         }
     }
 }
