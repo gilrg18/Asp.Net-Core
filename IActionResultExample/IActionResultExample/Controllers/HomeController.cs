@@ -7,7 +7,7 @@ namespace IActionResultExample.Controllers
         [Route("bookstore/{bookid?}/{isloggedin?}")]
         //url: /bookstore?bookid=10&isloggedin=true
         //public IActionResult Index([FromRoute] int? bookid, [FromRoute] bool? isloggedin)
-        public IActionResult Index([FromQuery] int? bookid, [FromQuery] bool? isloggedin, Book book)
+        public IActionResult Index(int? bookid, [FromRoute] bool? isloggedin, Book book)
 
         {
 

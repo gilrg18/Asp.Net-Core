@@ -4,7 +4,7 @@ namespace IActionResultExample.Models
 {
     public class Book
     {
-        [FromQuery]
+        //[FromQuery]
         public int? BookId { get; set; }
 
         //This one has no specific attribute, so its value will be picked by
