@@ -4,21 +4,26 @@ namespace IActionResultExample.Controllers
 {
     public class HomeController : Controller
     {
-        [Route("bookstore")]
-        public IActionResult Index()
+        [Route("bookstore/{bookid?}/{isloggedin?}")]
+        //url: /bookstore?bookid=10&isloggedin=true
+        public IActionResult Index(int? bookid, bool? isloggedin)
         {
 
-            if (!Request.Query.ContainsKey("bookid"))
+            if (bookid.HasValue == false)
             {
-                return BadRequest("Book id is not supplied.");
+                return BadRequest("Book id is not supplied or empty.");
             }
 
-
-            if (string.IsNullOrEmpty(Convert.ToString(Request.Query["bookid"])))
+            if (bookid < 0)
             {
-                return BadRequest("Book id can't be null or empty.");
-
+                return BadRequest("Book id can't be less than or equal to 0");
             }
+
+            //if (string.IsNullOrEmpty(Convert.ToString(Request.Query["bookid"])))
+            //{
+            //    return BadRequest("Book id can't be null or empty.");
+
+            //}
             int bookId = Convert.ToInt16(ControllerContext.HttpContext.Request.Query["bookid"]);
             if (bookId <= 0)
             {
@@ -32,7 +37,7 @@ namespace IActionResultExample.Controllers
                 return NotFound("Book not found!"); //404
             }
 
-            if (!Convert.ToBoolean(Request.Query["isloggedin"]))
+            if (isloggedin == false || isloggedin == null)
             {
 
                 return Unauthorized("User must be authenticated");
@@ -59,7 +64,8 @@ namespace IActionResultExample.Controllers
 
             //REDIRECTRESULT
             //return Redirect($"store/books/{bookId}");//302
-            return RedirectPermanent($"store/books/{bookId}"); //301
+            //return RedirectPermanent($"store/books/{bookId}"); //301
+            return Content($"Book id: {bookid}", "text/plain");
         }
     }
 }
