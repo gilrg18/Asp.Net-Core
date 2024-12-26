@@ -1,13 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-
+using IActionResultExample.Models;
 namespace IActionResultExample.Controllers
 {
     public class HomeController : Controller
     {
-        [Route("bookstore/{isloggedin?}")]
+        [Route("bookstore/{bookid?}/{isloggedin?}")]
         //url: /bookstore?bookid=10&isloggedin=true
         //public IActionResult Index([FromRoute] int? bookid, [FromRoute] bool? isloggedin)
-        public IActionResult Index([FromQuery] int? bookid, [FromRoute] bool? isloggedin)
+        public IActionResult Index([FromQuery] int? bookid, [FromQuery] bool? isloggedin, Book book)
 
         {
 
@@ -61,7 +61,7 @@ namespace IActionResultExample.Controllers
             //REDIRECTRESULT
             //return Redirect($"store/books/{bookId}");//302
             //return RedirectPermanent($"store/books/{bookId}"); //301
-            return Content($"Book id: {bookid}", "text/plain");
+            return Content($"Book id: {bookid}, Book {book}", "text/plain");
         }
     }
 }
