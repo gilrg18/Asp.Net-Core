@@ -4,10 +4,10 @@ namespace IActionResultExample.Controllers
 {
     public class HomeController : Controller
     {
-        [Route("bookstore/{bookid?}/{isloggedin?}")]
+        [Route("bookstore/{isloggedin?}")]
         //url: /bookstore?bookid=10&isloggedin=true
         //public IActionResult Index([FromRoute] int? bookid, [FromRoute] bool? isloggedin)
-        public IActionResult Index([FromQuery] int? bookid, [FromQuery] bool? isloggedin)
+        public IActionResult Index([FromQuery] int? bookid, [FromRoute] bool? isloggedin)
 
         {
 
