@@ -6,7 +6,9 @@ namespace IActionResultExample.Controllers
     {
         [Route("bookstore/{bookid?}/{isloggedin?}")]
         //url: /bookstore?bookid=10&isloggedin=true
-        public IActionResult Index(int? bookid, bool? isloggedin)
+        //public IActionResult Index([FromRoute] int? bookid, [FromRoute] bool? isloggedin)
+        public IActionResult Index([FromQuery] int? bookid, [FromQuery] bool? isloggedin)
+
         {
 
             if (bookid.HasValue == false)
@@ -24,14 +26,8 @@ namespace IActionResultExample.Controllers
             //    return BadRequest("Book id can't be null or empty.");
 
             //}
-            int bookId = Convert.ToInt16(ControllerContext.HttpContext.Request.Query["bookid"]);
-            if (bookId <= 0)
-            {
-
-                return BadRequest("Book id cant be less than or equal to zero");
-
-            }
-            if (bookId > 1000)
+            
+            if (bookid > 1000)
             {
 
                 return NotFound("Book not found!"); //404
