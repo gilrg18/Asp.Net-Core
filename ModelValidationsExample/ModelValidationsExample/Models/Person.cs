@@ -3,7 +3,7 @@ namespace ModelValidationsExample.Models
 {
     public class Person
     {
-        [Required] //this indicates the property Name is mandatory, cannot be null or empty
+        [Required(ErrorMessage = "Please provide name :)")] //this indicates the property Name is mandatory, cannot be null or empty
         public string? Name { get; set; }
         public string? Email { get; set; }
         public string? Phone { get; set; }
