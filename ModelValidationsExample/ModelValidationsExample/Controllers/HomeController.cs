@@ -6,8 +6,9 @@ namespace ModelValidationsExample.Controllers
     public class HomeController : Controller
     {
         [Route("register")]
-        public IActionResult Index([Bind(nameof(Person.Name), nameof(Person.Email), nameof(Person.Password), 
-            nameof(Person.ConfirmPassword))] Person person)
+        //public IActionResult Index([Bind(nameof(Person.Name), nameof(Person.Email), nameof(Person.Password), 
+        //    nameof(Person.ConfirmPassword))] Person person)
+        public IActionResult Index(Person person)
         {
             if (!ModelState.IsValid)
             {
