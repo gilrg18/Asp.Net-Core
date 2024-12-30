@@ -37,9 +37,13 @@ namespace ModelValidationsExample.Models
         [DateRangeValidator("FromDate", ErrorMessage = "'FromDate' Should be older than or equal to 'ToDate'")]
         public DateTime? ToDate { get; set; }
         public int? Age { get; set; }
+
+        //string? - accepts null values
+        public List<string?> Tags { get; set; } = new List<string?>();
         public override string ToString()
         {
-            return $"Person object - Name: {Name}, Email: {Email}, Phone: {Phone}, Password: {Password},ConfirmPassword: {ConfirmPassword}, Price: {Price}, Birth: {DateOfBirth}, From: {FromDate}, To:{ToDate}";
+            return $"Person object - Name: {Name}, Email: {Email}, Phone: {Phone}, Password: {Password},ConfirmPassword: {ConfirmPassword}, Price: {Price}, Birth: {DateOfBirth}, From: {FromDate}, To:{ToDate}" +
+                $"\n Tags: {String.Join(',', Tags)}";
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
