@@ -10,7 +10,7 @@ namespace ModelValidationsExample.Controllers
         //public IActionResult Index([Bind(nameof(Person.Name), nameof(Person.Email), nameof(Person.Password), 
         //    nameof(Person.ConfirmPassword))] Person person)
         //public IActionResult Index([FromBody] [ModelBinder(BinderType = typeof(PersonModelBinder))]Person person)
-        public IActionResult Index(Person person)
+        public IActionResult Index(Person person, [FromHeader(Name = "User-Agent")] string UserAgent)
         {
             if (!ModelState.IsValid)
             {
@@ -20,7 +20,9 @@ namespace ModelValidationsExample.Controllers
                 err.ErrorMessage));
                 return BadRequest(errors);
             }
-            return Content($"{person}");
+            //Retrieve value from request headers in traditional code:
+            //ControllerContext.HttpContext.Request.Headers["key"];
+            return Content($"{person}, {UserAgent}");
         }
     }
 }
