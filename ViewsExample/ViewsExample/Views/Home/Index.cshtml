@@ -4,7 +4,7 @@
     Person person = new Person()
     {
         Name = "Gil",
-        DateOfBirth = Convert.ToDateTime("2000-01-01")
+        DateOfBirth = null
     };
 }
 <!DOCTYPE html>
@@ -13,15 +13,19 @@
     <title>@appTitle</title> @*Razor Expression*@
     <meta charset="utf-8" />
 </head>
-    <body>
-        <h1>Welcome</h1>
-        <h2>Hello @person.Name</h2>
-        <h2>Birthday: @person.DateOfBirth</h2>
-        @{ 
-            double age = 0;
-            if (person.DateOfBirth.HasValue)
-                age = Math.Round((DateTime.Now - person.DateOfBirth).Value.TotalDays / 365.25);
-        }
+<body>
+    <h1>Welcome</h1>
+    <h2>Hello @person.Name</h2>
+    <h2>Birthday: @person.DateOfBirth </h2>
+    @if (person.DateOfBirth.HasValue)
+    {
+        double age = Math.Round((DateTime.Now - person.DateOfBirth).Value.TotalDays / 365.25);
         <h3>@age years old </h3>
-    </body>
+    }
+    else
+    {
+        <h3>DateOfBirth is unkown</h3>
+    }
+
+</body>
 </html>
