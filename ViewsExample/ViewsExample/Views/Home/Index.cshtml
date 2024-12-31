@@ -4,7 +4,8 @@
     Person person = new Person()
     {
         Name = "Gil",
-        DateOfBirth = null
+        DateOfBirth = null,
+        PersonGender = Gender.Male
     };
 }
 <!DOCTYPE html>
@@ -27,5 +28,20 @@
         <h3>DateOfBirth is unkown</h3>
     }
 
+    @switch (person.PersonGender)
+    {
+        case Gender.Male:
+            <p>Male :)</p>;
+            break;
+        case Gender.Female:
+            <p>Female :)</p>
+            break;
+        case Gender.Other:
+            <p>Other :)</p>;
+            break;
+        default:
+            <p>???</p>;
+            break;
+    }
 </body>
 </html>
