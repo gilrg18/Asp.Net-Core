@@ -1,51 +1,27 @@
 ﻿@using ViewsExample.Models
-@{ //Razor Code Block
-    string appTitle = "Views Example";
-    List<Person> people = new List<Person>()
-{
-        new Person() {Name="Gil",DateOfBirth = DateTime.Parse("2000-01-01"), PersonGender = Gender.Male},
-        new Person() {Name="Gil",DateOfBirth = DateTime.Parse("2000-01-01"), PersonGender = Gender.Male},
-        new Person() {Name="Gil",DateOfBirth = null, PersonGender = Gender.Male},
-    };
 
-}
-
-@{
-    double? GetAge(DateTime? dateOfBirth)
-    {
-        if (dateOfBirth is not null)
-        {
-            return Math.Round((DateTime.Now - dateOfBirth.Value).TotalDays / 365.25);
-        }
-        else
-        {
-            return null;
-        }
-    }
-
-
-
-    string alertMessage = $"<script>alert('{people.Count} people found')</script>";
- }
 <!DOCTYPE html>
 <html>
 <head>
-    <title>@appTitle</title> @*Razor Expression*@
+    <title>@ViewData["pageTitle"]</title>
     <meta charset="utf-8" />
 </head>
 <body>
-    @Html.Raw(alertMessage)
     <h1>Welcome</h1>
-    @for (int i = 0; i < 3; i++)
+    @{
+        //Value is object type so u have to typecast your people list
+        List<Person>? people = (List<Person>?)ViewData["people"];
+    }
+    @foreach(Person person in people)
     {
-        Person person = people[i];
+      
         <div>
             @person.Name
             <span>,</span>
             <span>@person.PersonGender</span>
             @if (person.DateOfBirth != null)
             {
-                <span>@GetAge(person.DateOfBirth) years old</span>
+                <span>@person.DateOfBirth.Value.ToString("MM/dd/yyyy")</span>
             }
             else
             { <span>???</span>}
