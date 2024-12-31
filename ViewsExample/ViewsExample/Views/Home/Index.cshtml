@@ -1,10 +1,27 @@
-﻿<!DOCTYPE html>
+﻿@using ViewsExample.Models
+@{ //Razor Code Block
+    string appTitle = "Views Example";
+    Person person = new Person()
+    {
+        Name = "Gil",
+        DateOfBirth = Convert.ToDateTime("2000-01-01")
+    };
+}
+<!DOCTYPE html>
 <html>
-    <head>
-        <title>Views Example</title>
-        <meta charset="utf-8" />
-    </head>
+<head>
+    <title>@appTitle</title> @*Razor Expression*@
+    <meta charset="utf-8" />
+</head>
     <body>
-        Welcome
+        <h1>Welcome</h1>
+        <h2>Hello @person.Name</h2>
+        <h2>Birthday: @person.DateOfBirth</h2>
+        @{ 
+            double age = 0;
+            if (person.DateOfBirth.HasValue)
+                age = Math.Round((DateTime.Now - person.DateOfBirth).Value.TotalDays / 365.25);
+        }
+        <h3>@age years old </h3>
     </body>
 </html>
