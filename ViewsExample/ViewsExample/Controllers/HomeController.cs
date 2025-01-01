@@ -21,7 +21,7 @@ namespace ViewsExample.Controllers
             //ViewBag.people = people; //heres no benefit, just syntactic sugar
 
             //Instead of using ViewBag for List of persons we pass the List of persons (people) to the View
-            return View("Index",people); //if you dont specify the view name it will take /Views/Home/Index.cshtml because of the method name
+            return View("Index", people); //if you dont specify the view name it will take /Views/Home/Index.cshtml because of the method name
             //return View("abcView"); //abcView.chstml
             //return new ViewResult() { ViewName = "abcView" };
         }
@@ -42,6 +42,30 @@ namespace ViewsExample.Controllers
             //Return the first match
             Person matchingPerson = people.Where(temp => temp.Name == name).FirstOrDefault();
             return View(matchingPerson); //Views/Home/Details.cshtml
+        }
+
+        [Route("person-with-product")]
+        public IActionResult PersonWithProduct()
+        {
+            Person person = new Person()
+            {
+                Name = "Name",
+                PersonGender = Gender.Male,
+                DateOfBirth = Convert.ToDateTime("2004-05-05")
+            };
+
+            Product product = new Product()
+            {
+                ProductId = 1,
+                ProductName = "Shampoo",
+            };
+
+            PersonAndProductWrapperModel personAndProductWrapperModel = new PersonAndProductWrapperModel()
+            {
+                PersonData = person,
+                ProductData = product,
+            };
+            return View(personAndProductWrapperModel);
         }
     }
 }

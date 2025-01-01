@@ -13,7 +13,7 @@
 </head>
 <body>
     <div class="page-content">
-        <h1>Welcome</h1>
+        <h1>Persons</h1>
         @{
             //Value is object type so u have to typecast your people list
             //List<Person>? people = (List<Person>?)ViewData["people"];
@@ -40,9 +40,14 @@
                         </tr>
                     </tbody>
                 </table>
-                <a href="/person-details/@person.Name">Details</a>
+                <div>
+                    <a href="/person-details/@person.Name">Details</a>
+                </div>
             </div>
         }
+        <div>
+            <a href="/person-with-product">Person with product</a>
+        </div>
     </div>
 </body>
 </html>
