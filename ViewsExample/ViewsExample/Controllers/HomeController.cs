@@ -25,5 +25,23 @@ namespace ViewsExample.Controllers
             //return View("abcView"); //abcView.chstml
             //return new ViewResult() { ViewName = "abcView" };
         }
+
+        [Route("person-details/{name}")]
+        public IActionResult Details(string? name)
+        {
+            if (name == null)
+            {
+                return Content("Person name can't be null");
+            }
+            List<Person> people = new List<Person>()
+            {
+                new Person() {Name="Gil",DateOfBirth = DateTime.Parse("2000-01-01"), PersonGender = Gender.Male},
+                new Person() {Name="Gil",DateOfBirth = DateTime.Parse("2000-01-01"), PersonGender = Gender.Male},
+                new Person() {Name="Gil",DateOfBirth = null, PersonGender = Gender.Male},
+            };
+            //Return the first match
+            Person matchingPerson = people.Where(temp => temp.Name == name).FirstOrDefault();
+            return View(matchingPerson); //Views/Home/Details.cshtml
+        }
     }
 }

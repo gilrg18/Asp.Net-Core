@@ -7,7 +7,7 @@
 <html>
 <head>
     @*<title>@ViewData["pageTitle"]</title>*@
-    <title>@ViewBag.appTitle]</title>
+    <title>@ViewBag.pageTitle</title>
     <meta charset="utf-8" />
     <link href="~/StyleSheet.css" rel="stylesheet" />
 </head>
@@ -40,6 +40,7 @@
                         </tr>
                     </tbody>
                 </table>
+                <a href="/person-details/@person.Name">Details</a>
             </div>
         }
     </div>
