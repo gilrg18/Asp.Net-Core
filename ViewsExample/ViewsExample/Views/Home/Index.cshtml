@@ -5,27 +5,43 @@
 <head>
     <title>@ViewData["pageTitle"]</title>
     <meta charset="utf-8" />
+    <link href="~/StyleSheet.css" rel="stylesheet" />
 </head>
 <body>
-    <h1>Welcome</h1>
-    @{
-        //Value is object type so u have to typecast your people list
-        List<Person>? people = (List<Person>?)ViewData["people"];
-    }
-    @foreach(Person person in people)
-    {
-      
-        <div>
-            @person.Name
-            <span>,</span>
-            <span>@person.PersonGender</span>
-            @if (person.DateOfBirth != null)
-            {
-                <span>@person.DateOfBirth.Value.ToString("MM/dd/yyyy")</span>
-            }
-            else
-            { <span>???</span>}
-        </div>
-    }
+    <div class="page-content">
+        <h1>Welcome</h1>
+        @{
+            //Value is object type so u have to typecast your people list
+            List<Person>? people = (List<Person>?)ViewData["people"];
+        }
+        @foreach (Person person in people)
+        {
+
+            <div class="box float-left w-50">
+                <h3>
+                    @person.Name
+                </h3>
+                <table class="table w-100">
+                    <tbody>
+                        <tr>
+                            <td>Gender</td>
+                            <td>@person.PersonGender</td>
+                        </tr>
+                        <tr>
+                            <td>Date of Birth</td>
+                            @if (person.DateOfBirth != null)
+                            {
+                                <td>@person.DateOfBirth.Value.ToString("MM/dd/yyyy")</td>
+                            }
+                            else
+                            {
+                                <td>???</td>
+                            }
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
 </body>
 </html>
