@@ -18,9 +18,10 @@ namespace ViewsExample.Controllers
                 new Person() {Name="Gil",DateOfBirth = null, PersonGender = Gender.Male},
             };
             //ViewData["people"] = people;
-            ViewBag.people = people; //heres no benefit, just syntactic sugar
+            //ViewBag.people = people; //heres no benefit, just syntactic sugar
 
-            return View(); //if you dont specify the view name it will take /Views/Home/Index.cshtml because of the method name
+            //Instead of using ViewBag for List of persons we pass the List of persons (people) to the View
+            return View("Index",people); //if you dont specify the view name it will take /Views/Home/Index.cshtml because of the method name
             //return View("abcView"); //abcView.chstml
             //return new ViewResult() { ViewName = "abcView" };
         }

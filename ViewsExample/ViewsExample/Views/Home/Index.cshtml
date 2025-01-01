@@ -1,5 +1,8 @@
 ﻿@using ViewsExample.Models
-
+<!--This means that this view is bound to this list of Person-->
+@model IEnumerable<Person>
+<!--Now its responsibility of the controller to Supply the Model Object-->
+@*@model List<Person>*@  <!--IEnumerable is the parent of list-->
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,8 +18,7 @@
             //Value is object type so u have to typecast your people list
             //List<Person>? people = (List<Person>?)ViewData["people"];
         }
-        @foreach (Person person in ViewBag.people) //ViewBag.people, Benefit is that u dont need to typecast anymore. Internally
-            //the ViewBag reads the data from ViewData
+        @foreach (Person person in Model) //Access the person list using Model
         {
 
             <div class="box float-left w-50">
@@ -35,14 +37,6 @@
                         <tr>
                             <td>Date of Birth</td>
                             <td>@person.DateOfBirth?.ToString("MM/dd/yyyy")</td>
-                            @*@if (person.DateOfBirth != null)
-        {
-            <td>@person.DateOfBirth.Value.ToString("MM/dd/yyyy")</td>
-        }
-        else
-        {
-            <td>???</td>
-        }*@
                         </tr>
                     </tbody>
                 </table>
