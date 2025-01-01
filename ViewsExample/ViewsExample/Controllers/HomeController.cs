@@ -67,5 +67,14 @@ namespace ViewsExample.Controllers
             };
             return View(personAndProductWrapperModel);
         }
+
+        [Route("home/all")]
+        public IActionResult All()
+        {
+            return View();
+            //Views/Home/All.cshtml - First searches in Home Folder
+            //Views/Shared/All.cshtml
+        }
+
     }
 }
