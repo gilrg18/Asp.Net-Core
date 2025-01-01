@@ -3,7 +3,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>@ViewData["pageTitle"]</title>
+    @*<title>@ViewData["pageTitle"]</title>*@
+    <title>@ViewBag.appTitle]</title>
     <meta charset="utf-8" />
     <link href="~/StyleSheet.css" rel="stylesheet" />
 </head>
@@ -12,13 +13,17 @@
         <h1>Welcome</h1>
         @{
             //Value is object type so u have to typecast your people list
-            List<Person>? people = (List<Person>?)ViewData["people"];
+            //List<Person>? people = (List<Person>?)ViewData["people"];
         }
-        @foreach (Person person in people)
+        @foreach (Person person in ViewBag.people) //ViewBag.people, Benefit is that u dont need to typecast anymore. Internally
+            //the ViewBag reads the data from ViewData
         {
 
             <div class="box float-left w-50">
                 <h3>
+                    @* If you want intellisense to help you you must know the type of the variable in the foreach loop
+                        for example here you must know its Person and not var, if you put var, Intellisense wont know the properties
+                        of person*@
                     @person.Name
                 </h3>
                 <table class="table w-100">
@@ -29,14 +34,15 @@
                         </tr>
                         <tr>
                             <td>Date of Birth</td>
-                            @if (person.DateOfBirth != null)
-                            {
-                                <td>@person.DateOfBirth.Value.ToString("MM/dd/yyyy")</td>
-                            }
-                            else
-                            {
-                                <td>???</td>
-                            }
+                            <td>@person.DateOfBirth?.ToString("MM/dd/yyyy")</td>
+                            @*@if (person.DateOfBirth != null)
+        {
+            <td>@person.DateOfBirth.Value.ToString("MM/dd/yyyy")</td>
+        }
+        else
+        {
+            <td>???</td>
+        }*@
                         </tr>
                     </tbody>
                 </table>
