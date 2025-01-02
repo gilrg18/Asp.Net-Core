@@ -1,7 +1,7 @@
 using ServiceContracts;
 using Services;
 using Microsoft.EntityFrameworkCore;
-using Entities;
+using Entities; //Import Entities to access PersonsDbContext
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
@@ -13,9 +13,15 @@ builder.Services.AddSingleton<IPersonsService, PersonsService>();
 //ADD THE DATABASE CONTEXT
 builder.Services.AddDbContext<PersonsDbContext>(options =>
 {
-    options.UseSqlServer();
+    //This works but its not recommended because it is a bad practice to mix configuration settings with your source code.
+    //options.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=PersonsDatabase;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
+    //options.UseSqlServer(builder.Configuration["ConnectionStrings:DefaultConnection"]);
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
-
+//Connection string goes in appsettings.json
+//Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=PersonsDatabase;Integrated Security=True;
+//Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;
+//Application Intent=ReadWrite;Multi Subnet Failover=False
 var app = builder.Build();
 
 if (builder.Environment.IsDevelopment())
