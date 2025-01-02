@@ -6,6 +6,9 @@ namespace Entities
 {
     public class PersonsDbContext : DbContext
     {
+        public PersonsDbContext(DbContextOptions<PersonsDbContext> options) :base(options) { 
+        
+        }
         //An instance of DBContext is responsible to hold a set of DBSets and represent a connection with the db
         public DbSet<Country> Countries { get; set; }
         public DbSet<Person> Persons { get; set; }
