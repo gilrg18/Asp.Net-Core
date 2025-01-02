@@ -10,15 +10,17 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddSingleton<ICountriesService, CountriesService>();
 builder.Services.AddSingleton<IPersonsService, PersonsService>();
 
-builder.Services.AddDbContext<PersonsDbContext>(options => {
-  options.UseSqlServer();
+//ADD THE DATABASE CONTEXT
+builder.Services.AddDbContext<PersonsDbContext>(options =>
+{
+    options.UseSqlServer();
 });
 
 var app = builder.Build();
 
 if (builder.Environment.IsDevelopment())
 {
-  app.UseDeveloperExceptionPage();
+    app.UseDeveloperExceptionPage();
 }
 
 app.UseStaticFiles();

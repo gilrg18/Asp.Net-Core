@@ -6,6 +6,7 @@ namespace Entities
 {
   public class PersonsDbContext : DbContext
   {
+    //An instance of DBContext is responsible to hold a set of DBSets and represent a connection with the db
     public DbSet<Country> Countries { get; set; }
     public DbSet<Person> Persons { get; set; }
 
