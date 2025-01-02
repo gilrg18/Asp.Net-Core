@@ -19,6 +19,8 @@ namespace Entities
 
             modelBuilder.Entity<Country>().ToTable("Countries");
             modelBuilder.Entity<Person>().ToTable("Persons");
+            
+       
 
             //Seed Data to Countries
             //1-Read the file content:
