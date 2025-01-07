@@ -29,6 +29,9 @@ namespace Entities
         public string? Address { get; set; }
 
         //bit for bool types in sql
-        public bool ReceiveNewsLetters { get; set; }
+        public bool ReceiveNewsLetters { get; set; } 
+
+        public string? TIN { get; set; }
     }
 }
+ 
