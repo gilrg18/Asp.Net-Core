@@ -58,6 +58,14 @@ namespace Entities
 
             //modelBuilder.Entity<Person>().HasIndex(temp => temp.TIN).IsUnique(); //NO DUPLICATE VALUES
             modelBuilder.Entity<Person>().HasCheckConstraint("CHK_TIN", "len([TaxIdentificationNumber]) = 8");
+
+            //Table Relations - Every country has a list of persons
+            modelBuilder.Entity<Person>(entity =>
+            {
+                entity.HasOne<Country>(c => c.Country)
+                .WithMany(p => p.Persons)
+                .HasForeignKey(p => p.CountryID);
+            });
         }
 
         //Access stored procedure
