@@ -55,6 +55,9 @@ namespace Entities
                 .HasColumnName("TaxIdentificationNumber") //Specifies column name in table
                 .HasColumnType("varchar(8)") //Specifies column data type in table
                 .HasDefaultValue("ABC12345"); //Default value of the column
+
+            //modelBuilder.Entity<Person>().HasIndex(temp => temp.TIN).IsUnique(); //NO DUPLICATE VALUES
+            modelBuilder.Entity<Person>().HasCheckConstraint("CHK_TIN", "len([TaxIdentificationNumber]) = 8");
         }
 
         //Access stored procedure
