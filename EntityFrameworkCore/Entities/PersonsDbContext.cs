@@ -49,6 +49,12 @@ namespace Entities
             {
                 modelBuilder.Entity<Person>().HasData(person);
             }
+
+            //Fluent API
+            modelBuilder.Entity<Person>().Property(temp => temp.TIN)
+                .HasColumnName("TaxIdentificationNumber") //Specifies column name in table
+                .HasColumnType("varchar(8)") //Specifies column data type in table
+                .HasDefaultValue("ABC12345"); //Default value of the column
         }
 
         //Access stored procedure
