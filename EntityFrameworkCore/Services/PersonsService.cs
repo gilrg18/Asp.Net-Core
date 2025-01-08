@@ -8,6 +8,11 @@ using ServiceContracts.Enums;
 using Microsoft.EntityFrameworkCore;
 using CsvHelper;
 using System.Globalization;
+using Microsoft.SqlServer.Server;
+using System.Reflection.Metadata;
+using System.Runtime.ConstrainedExecution;
+using System.Xml;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Services
 {
@@ -223,17 +228,26 @@ namespace Services
 
         public async Task<MemoryStream> GetPersonsCSV()
         {
+            //A MemoryStream is created to hold the CSV data in memory. It allows you to write to it like a file, but everything is stored in RAM.
             MemoryStream memoryStream = new MemoryStream();
             StreamWriter streamWriter = new StreamWriter(memoryStream);//streamWriter writes the content into the memory stream
             CsvWriter csvWriter = new CsvWriter(streamWriter, CultureInfo.InvariantCulture, leaveOpen: true);
-            
+            //A CsvWriter(from the CsvHelper library) is created to handle writing CSV data
+            //to the streamWriter.It takes the streamWriter and ensures the CSV format adheres to
+            //the specified culture(InvariantCulture ensures formatting is consistent regardless of locale).
+            //leaveOpen: true ensures the StreamWriter and MemoryStream stay open after the CsvWriter is disposed.
             csvWriter.WriteHeader<PersonResponse>(); //PersonID, PersonName,...
-            csvWriter.NextRecord(); //\n (new line character in the file)
-            
+            csvWriter.NextRecord(); //Moves to the next record (row) in the CSV by writing a newline character (\n), ensuring the subsequent data starts on a new line.
+
             List<PersonResponse> persons =  _db.Persons.Include("Country").Select(temp => temp.ToPersonResponse()).ToList();
             await csvWriter.WriteRecordsAsync(persons); // 1, abc, ...
+            //Writes all the rows of data (persons) to the CSV file. Each object in persons is written as a row, matching the column order defined by PersonResponse.
             // Make sure to flush the writer
             await streamWriter.FlushAsync();
+            //Flushes any buffered data from the StreamWriter to the underlying MemoryStream.
+            //Normally, data written to the StreamWriter is held in a buffer for performance reasons.
+            //FlushAsync ensures all the data in the buffer is pushed to the MemoryStream.
+            //This is crucial to ensure no data is left unwritten before the MemoryStream is returned.
 
             MemoryStream newMemoryStream = new MemoryStream(memoryStream.ToArray());
             newMemoryStream.Position = 0; //beggining of the memory stream;
