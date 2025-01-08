@@ -13,6 +13,7 @@ using System.Reflection.Metadata;
 using System.Runtime.ConstrainedExecution;
 using System.Xml;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using CsvHelper.Configuration;
 
 namespace Services
 {
@@ -231,16 +232,49 @@ namespace Services
             //A MemoryStream is created to hold the CSV data in memory. It allows you to write to it like a file, but everything is stored in RAM.
             MemoryStream memoryStream = new MemoryStream();
             StreamWriter streamWriter = new StreamWriter(memoryStream);//streamWriter writes the content into the memory stream
-            CsvWriter csvWriter = new CsvWriter(streamWriter, CultureInfo.InvariantCulture, leaveOpen: true);
+            CsvConfiguration csvConfiguration = new CsvConfiguration(CultureInfo.InvariantCulture);
+
+            CsvWriter csvWriter = new CsvWriter(streamWriter, csvConfiguration);
             //A CsvWriter(from the CsvHelper library) is created to handle writing CSV data
             //to the streamWriter.It takes the streamWriter and ensures the CSV format adheres to
             //the specified culture(InvariantCulture ensures formatting is consistent regardless of locale).
             //leaveOpen: true ensures the StreamWriter and MemoryStream stay open after the CsvWriter is disposed.
-            csvWriter.WriteHeader<PersonResponse>(); //PersonID, PersonName,...
+
+            csvWriter.WriteField(nameof(PersonResponse.PersonName)); //PersonName property name
+            csvWriter.WriteField(nameof(PersonResponse.Email)); //Email property name
+            csvWriter.WriteField(nameof(PersonResponse.DateOfBirth));
+            csvWriter.WriteField(nameof(PersonResponse.Age));
+            csvWriter.WriteField(nameof(PersonResponse.Gender));
+            csvWriter.WriteField(nameof(PersonResponse.Country));
+            csvWriter.WriteField(nameof(PersonResponse.Address));
+            csvWriter.WriteField(nameof(PersonResponse.ReceiveNewsLetters));
+            //csvWriter.WriteHeader<PersonResponse>(); //PersonID, PersonName,...
+            
             csvWriter.NextRecord(); //Moves to the next record (row) in the CSV by writing a newline character (\n), ensuring the subsequent data starts on a new line.
 
-            List<PersonResponse> persons =  _db.Persons.Include("Country").Select(temp => temp.ToPersonResponse()).ToList();
-            await csvWriter.WriteRecordsAsync(persons); // 1, abc, ...
+            List<PersonResponse> persons = _db.Persons.Include("Country").Select(temp => temp.ToPersonResponse()).ToList();
+            //Manual loop to go through each person
+            foreach (PersonResponse person in persons)
+            {
+                csvWriter.WriteField(person.PersonName);
+                csvWriter.WriteField(person.Email);
+                if (person.DateOfBirth.HasValue)
+                {
+                    csvWriter.WriteField(person.DateOfBirth.Value.ToString("yyyy-MM-dd"));
+                }
+                else
+                {
+                    csvWriter.WriteField("");
+                }
+                csvWriter.WriteField(person.Age);
+                csvWriter.WriteField(person.Gender);
+                csvWriter.WriteField(person.Country);
+                csvWriter.WriteField(person.Address);
+                csvWriter.WriteField(person.ReceiveNewsLetters);
+                csvWriter.NextRecord();
+                csvWriter.Flush(); //Writes the current data to the stream
+            }
+            //await csvWriter.WriteRecordsAsync(persons); // 1, abc, ...
             //Writes all the rows of data (persons) to the CSV file. Each object in persons is written as a row, matching the column order defined by PersonResponse.
             // Make sure to flush the writer
             await streamWriter.FlushAsync();
@@ -251,6 +285,9 @@ namespace Services
 
             MemoryStream newMemoryStream = new MemoryStream(memoryStream.ToArray());
             newMemoryStream.Position = 0; //beggining of the memory stream;
+                                          //Resets the position of the new MemoryStream to the start.
+                                          //When writing to a stream, the "cursor"(or position) moves to the end of the stream.
+                                          //By setting Position = 0, the stream is ready to be read from the beginning when returned to the caller.
             return newMemoryStream;
         }
     }
