@@ -9,11 +9,10 @@ namespace DIExample.Controllers
     {
         private readonly ICitiesService _citiesService;
 
-        public HomeController()
+        public HomeController(ICitiesService citiesService)
         {
-            //instantiate the CitiesService class;
-            //this is a bad practice, you should use DEPENDENCY INJECTION
-            _citiesService = null;//how to create object??
+            //DEPENDENCY INJECTION
+            _citiesService = citiesService; //new CitiesService() - this happens automatically thanks to our IOC Container in Program.cs
         }
 
         [Route("/")]
