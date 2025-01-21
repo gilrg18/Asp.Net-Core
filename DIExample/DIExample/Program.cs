@@ -7,7 +7,7 @@ builder.Services.Add(new ServiceDescriptor
 (
     typeof(ICitiesService),
     typeof(CitiesService),
-    ServiceLifetime.Singleton
+    ServiceLifetime.Scoped
 ));
 
 
