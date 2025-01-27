@@ -26,7 +26,11 @@ builder.Host.ConfigureContainer<ContainerBuilder>
     //().As<ICitiesService>().InstancePerDependency
     //();//AddTransient
 
+
     containerBuilder.RegisterType<CitiesService>
+    ().As<ICitiesService>().InstancePerLifetimeScope
+    ();//AddScoped    
+    containerBuilder.RegisterType<CitiesService2>
     ().As<ICitiesService>().InstancePerLifetimeScope
     ();//AddScoped    
 

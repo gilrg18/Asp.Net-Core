@@ -6,7 +6,7 @@
 }
 
 <h1>Cities</h1>
-@{ 
+@{
     List<string> citiesFromServiceInView = citiesServiceInView.GetCities();
 }
 <ul class="list">
@@ -22,3 +22,8 @@
 <div>@citiesServiceInView.ServiceInstanceId</div>
 
 <div>@ViewBag.InstanceId_CititesService_InScope</div>
+
+@foreach (string city in ViewBag.citiesFromBothServices)
+{
+    <li>@city</li>
+}
