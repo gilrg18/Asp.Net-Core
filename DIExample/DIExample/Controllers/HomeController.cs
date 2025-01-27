@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Services;
 using ServiceContracts;
+using Autofac;
 
 namespace DIExample.Controllers
 {
@@ -11,16 +12,17 @@ namespace DIExample.Controllers
         private readonly ICitiesService _citiesService2;
         private readonly ICitiesService _citiesService3;
         //CHILD SCOPE
-        private readonly IServiceScopeFactory _serviceScopeFactory;
+        //private readonly IServiceScopeFactory _serviceScopeFactory;
+        private readonly ILifetimeScope _lifeTimeScope; //From autofac
 
         public HomeController(ICitiesService citiesService1, ICitiesService citiesService2, ICitiesService citiesService3
-            , IServiceScopeFactory serviceScopeFactory) //CONTRUCTOR INJECTION
+            , ILifetimeScope serviceScopeFactory) //CONTRUCTOR INJECTION
         {
             //DEPENDENCY INJECTION
             _citiesService1 = citiesService1; //new CitiesService() - this happens automatically thanks to our IOC Container in Program.cs
             _citiesService2 = citiesService2;
             _citiesService3 = citiesService3;
-            _serviceScopeFactory = serviceScopeFactory;
+            _lifeTimeScope = serviceScopeFactory;
         }
 
         [Route("/")]
@@ -33,10 +35,10 @@ namespace DIExample.Controllers
             ViewBag.InstanceId_CitiesService_3 = _citiesService3.ServiceInstanceId;
 
             //CHILD SCOPE
-            using (IServiceScope scope = _serviceScopeFactory.CreateScope())
+            using (ILifetimeScope scope = _lifeTimeScope.BeginLifetimeScope())
             {
                 //Inject CitiesService
-                ICitiesService citiesService = scope.ServiceProvider.GetRequiredService<ICitiesService>(); //just like injecting the citiesservice in the constructor
+                ICitiesService citiesService = scope.Resolve<ICitiesService>(); //just like injecting the citiesservice in the constructor
                 //DB Work
 
                 ViewBag.InstanceId_CititesService_InScope = citiesService.ServiceInstanceId;
