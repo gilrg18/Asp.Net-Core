@@ -3,36 +3,12 @@
 }
 
 <h1>Index</h1>
-@{
-    PersonTableModel personTableModel = new PersonTableModel()
-    {
-        TableTitle = "Persons",
-        Persons = new List<Person>()
-{
-            new Person() { Name ="Yu", JobTitle="Dealer"},
-            new Person() { Name ="Gi", JobTitle="Gamer"},
-            new Person() { Name ="Oh", JobTitle="Hacker"},
-        }
-    };
-}
-@await Component.InvokeAsync("Table", new
-{
-    table = personTableModel
-})
 
-@{
-    PersonTableModel personTableModel2 = new PersonTableModel()
-    {
-        TableTitle = "Friends",
-        Persons = new List<Person>()
-{
-            new Person() { Name ="Friend", JobTitle="A"},
-            new Person() { Name ="Friend2", JobTitle="B"},
-            new Person() { Name ="Friend3", JobTitle="C"},
-        }
-    };
-}
-@await Component.InvokeAsync("Table", new
-{
-    table = personTableModel2
-})
+<button class="button button-blue-back" id="load-friends-button">Load Friends</button>
+
+<div id="list">
+
+</div>
+
+<script src="~/friends.js">
+</script>
