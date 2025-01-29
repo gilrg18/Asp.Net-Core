@@ -1,7 +1,20 @@
-﻿@{ 
+﻿@{
     ViewBag.Title = "About Title";
 }
 
 <h1>About</h1>
 
-<vc:table></vc:table>
+@{
+    PersonTableModel personTableModel = new PersonTableModel()
+    {
+        TableTitle = "AboutTable",
+        Persons = new List<Person>()
+{
+            new Person() { Name ="A", JobTitle="D"},
+            new Person() { Name ="B", JobTitle="E"},
+            new Person() { Name ="C", JobTitle="F"},
+        }
+    };
+}
+
+<vc:table table ="personTableModel"></vc:table>
