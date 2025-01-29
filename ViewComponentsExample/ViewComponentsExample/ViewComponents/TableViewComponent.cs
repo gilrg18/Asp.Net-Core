@@ -8,7 +8,7 @@ namespace ViewComponentsExample.ViewComponents
     {
         public async Task<IViewComponentResult> InvokeAsync() //green underline because we are not using an await keyword in the logic
         {
-            PersonTableModel model = new PersonTableModel()
+            PersonTableModel personTableModel = new PersonTableModel()
             {
                 TableTitle = "Persons List",
                 Persons = new List<Person>() {
@@ -17,8 +17,8 @@ namespace ViewComponentsExample.ViewComponents
                     new Person() { Name = "Gil3", JobTitle =  "Programmer3" }
                 }
             };
-            ViewBag.Table = model;
-            return View(); //invoked a partial view Views/Shared/Components/Table/Default.cshtml
+            //ViewBag.Table = model;
+            return View("Sample", personTableModel); //invoked a partial view Views/Shared/Components/Table/Default.cshtml
         }
     }
 }
